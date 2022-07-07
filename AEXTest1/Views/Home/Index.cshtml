@@ -1,0 +1,58 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model AEXTest1.Models.MovieListViewModel
+  
+<h2>Каталог фильмов</h2>
+  
+<form method="get">
+    <div>
+        <label>Название: </label>
+        <input asp-for="Name" />
+  
+        <label>Жанр: </label>  
+        <select name="genre" asp-for="@Model.SelectedValue" asp-items="Html.GetEnumSelectList<Genres>()"></select>
+        <input type="submit" value="Поиск" />
+    </div>
+    <div>
+        <label>Искать по:</label>
+        <input checked="checked" name="typeSearch" type="radio" value="titleSearching" />
+        <span>названию фильма</span> 
+        <input name="typeSearch" type="radio" value="actorSearching" />
+        <span>актеру</span> <br />
+    </div>
+</form>
+  
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Год</th>
+        <th>Страна</th>
+        <th>Актеры</th>
+    </tr>
+  
+    @foreach (var item in Model.Movies)
+    {
+        <tr>
+            <td>@item.Title <br /></td>
+            <td>@item.Year</td>
+            <td>@item.Country</td>
+            @{string str = "";}
+            @for(int i = 0; i<item.Actors.Count;i++)
+            {
+                if(i==item.Actors.Count-1)
+                {
+                    str += $"{item.Actors[i].Name} {item.Actors[i].Surname}";
+                }
+                else
+                {
+                    str += $"{item.Actors[i].Name} {item.Actors[i].Surname},";
+                }
+            }
+
+
+            <td>@str</td>
+            <td>
+                <a asp-action="Detail" asp-controller="Home" asp-route-id="@item.Id">Подробнее</a>
+            </td>
+        </tr>
+    }
+</table>

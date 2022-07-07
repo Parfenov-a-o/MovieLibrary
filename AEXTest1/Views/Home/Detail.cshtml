@@ -1,0 +1,52 @@
+﻿@model AEXTest1.Models.Movie
+  
+<h2>Информация о фильме</h2>
+
+@{
+    int textsize = 50;
+}
+
+<p>
+    <label asp-for="Title">Название фильма</label><br />
+    <input type="text" asp-for="Title" size="@textsize" readonly/>
+</p>
+
+<p>
+    <label asp-for="Country">Страна</label><br />
+    <input type="text" asp-for="Country" size="@textsize" readonly/>
+</p>
+
+<p>
+    <label asp-for="Year">Год</label><br />
+    <input type="number" asp-for="Year" size="@textsize" readonly/>
+</p>
+
+<p>
+    <label asp-for="Genre">Жанр</label><br />
+    <input type="text" asp-for="Genre" size="@textsize" readonly/>
+</p>
+
+<p>
+    <label asp-for="Description">Описание</label><br />
+    <input type="text" asp-for="Description" size="@textsize" readonly/>
+</p>
+
+<p>
+    <label asp-for="Actors">Актеры</label><br />
+    @{string str = "";}
+
+    @for(int i = 0; i<Model.Actors.Count;i++)
+    {
+        if(i==Model.Actors.Count-1)
+        {
+            str += $"{Model.Actors[i].Name} {Model.Actors[i].Surname}";
+        }
+        else
+        {
+            str += $"{Model.Actors[i].Name} {Model.Actors[i].Surname},";
+        }
+    }
+    
+    <textarea rows = "3" cols="50" readonly>@str</textarea>
+</p>
+
